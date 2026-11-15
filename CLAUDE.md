@@ -34,3 +34,30 @@ Before any decision or build on this project, run the council skill (`anthropic-
 - Supabase (London region) for logins, database and private recording storage. Cloudflare for domain and DNS. GitHub for hosting. Stripe for payments, on the web.
 - Voice recordings are personal data (UK GDPR): privacy policy, clear consent at signup, private by default, delete-my-data.
 - Use Sonnet for backend and login work. Remind the owner to switch to Fable (`/model claude-fable-5-2`) for the full design pass once logins work and the screens exist.
+
+## Status and handoff (15 Nov 2026)
+Work so far is on branch `claude/affectionate-einstein-0p1j7o`. It is not merged to the main branch yet, so none of `founders/` is live.
+
+### Built
+- `founders/index.html`: Morning Mic marketing homepage (tracks, before/after illustration, ladder, needs-based application form, FAQ, guides teaser). Self-hosted fonts in `founders/assets/fonts`, share image `founders/assets/og.png`.
+- Six guide pages plus an index in `founders/guides/`, with Article, FAQ and breadcrumb markup. `founders/sitemap.xml` and `founders/llms.txt` list them.
+- The application form asks for goals, where they get stuck, what they speak about, comfort, language and time. It sends nowhere yet: `FORM_ENDPOINT` in `founders/index.html` is empty.
+
+### Decisions made
+- Brand is Morning Mic; "Founders' Den" is dropped. Web app first, store apps later (see gates above).
+- Domain plan: register `morningmic.app` as the main address and `getmorningmic.com` as the `.com` that redirects to it. The owner is buying them in Cloudflare; not confirmed bought. `morningmic.com` is taken by an unrelated Arabic radio site registered 21 Oct 2026.
+- Supabase connector is connected on the owner's account, but no project exists yet. Plan: London region, free tier, show the cost confirmation before creating.
+- No prices are shown on the site; the owner has not set one.
+
+### Next steps, in order
+1. Once the domains are bought: change canonical, Open Graph and structured-data URLs from `imsal007.github.io/morning-mic/founders/` to the new domain, add a `CNAME` file, and point DNS in Cloudflare.
+2. Create the Supabase project; store applications; wire the form to it.
+3. Founder login, private space, saved recordings, before/after playback, row-level privacy rules.
+4. Privacy policy and terms pages (needs the owner's legal name and contact details). Consent at signup for voice recordings; delete-my-data.
+5. Trademark search for "Morning Mic" (UK and US).
+6. Full design pass with Fable once logins and screens exist; remind the owner to run `/model claude-fable-5-2`.
+7. Personal outreach to founders; write more guides only for phrases that appear in real applications.
+
+### Open items to confirm
+- Which branch GitHub Pages serves, so we know where to merge to make `founders/` live.
+- Whether the owner wants a pull request opened (do not open one unless asked).
