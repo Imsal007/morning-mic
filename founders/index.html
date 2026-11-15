@@ -7,7 +7,7 @@
 <meta name="description" content="Founder Rehearsal is a private speaking practice platform for founders, customised to your needs. Ten minutes a day on modules built around your goal: public speaking, articulation, or explaining your expertise. Hear your own before and after.">
 <link rel="canonical" href="https://founderrehearsal.com/">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
-<meta name="theme-color" content="#0C0B0A">
+<meta name="theme-color" content="#0A0F14">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Founder Rehearsal">
 <meta property="og:title" content="Founder Rehearsal | Rehearse in private. Walk in ready.">
@@ -23,7 +23,7 @@
 <meta name="twitter:description" content="A private rehearsal room for founders. Ten minutes a day on modules built around the one thing you want to fix.">
 <meta name="twitter:image" content="https://founderrehearsal.com/assets/og.png">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="assets/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/instrument.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
 <script>document.documentElement.classList.add('js')</script>
@@ -67,7 +67,7 @@
 <header class="nav" id="nav">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Founder Rehearsal home">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#1F1C19"/><path d="M17 47V31a15 15 0 0 1 30 0v16" fill="none" stroke="#E2B866" stroke-width="4.5" stroke-linecap="round"/><circle cx="32" cy="39" r="5" fill="#E2B866"/></svg>
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#131C25"/><polygon points="26,9 38,9 52,50 12,50" fill="#45BDB3" opacity=".3"/><circle cx="32" cy="30" r="6.5" fill="#45BDB3"/><path d="M22 50V46a10 10 0 0 1 20 0v4z" fill="#45BDB3"/></svg>
       Founder Rehearsal
     </a>
     <nav aria-label="Main">
@@ -148,14 +148,15 @@
       <div class="stage" aria-hidden="true">
         <svg viewBox="0 0 800 300" preserveAspectRatio="xMidYMid slice" focusable="false">
           <defs>
-            <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E2B866" stop-opacity=".55"/><stop offset="1" stop-color="#E2B866" stop-opacity="0"/></linearGradient>
+            <linearGradient id="beam" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#45BDB3" stop-opacity=".55"/><stop offset="1" stop-color="#45BDB3" stop-opacity="0"/></linearGradient>
           </defs>
           <polygon class="st-beam" points="236,-10 314,-10 430,268 120,268" fill="url(#beam)"/>
-          <ellipse class="st-pool" cx="275" cy="268" rx="158" ry="13" fill="#E2B866"/>
-          <line x1="0" y1="268" x2="800" y2="268" stroke="#2C2823"/>
-          <g class="st-lectern" fill="#2C2823"><rect x="322" y="192" width="56" height="8" rx="3"/><rect x="346" y="200" width="8" height="68"/></g>
+          <ellipse class="st-pool" cx="275" cy="268" rx="158" ry="13" fill="#45BDB3"/>
+          <line x1="0" y1="268" x2="800" y2="268" stroke="#22303D"/>
+          <g class="st-lectern" fill="#22303D"><rect x="322" y="192" width="56" height="8" rx="3"/><rect x="346" y="200" width="8" height="68"/></g>
           <g class="st-fig">
             <path d="M240 268V196a35 35 0 0 1 70 0v72z"/>
+            <path class="st-arm" d="M304 206l15 46"/>
             <circle class="st-head" cx="275" cy="128" r="22"/>
           </g>
           <g class="st-fillers">
@@ -178,6 +179,7 @@
             <path d="M644 300v-16a18 18 0 0 1 36 0v16z"/><circle cx="662" cy="252" r="11"/>
           </g>
         </svg>
+        <span class="stage-day">Day <b id="stDay">1</b><span class="stage-rungs"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></span>
         <span class="stage-cap"><b class="cap-b">Day 1.</b><b class="cap-a">Day 30.</b> <span class="cap-b">The answer wanders, and the room drifts.</span><span class="cap-a">One clear line, and the room leans in.</span></span>
       </div>
 
@@ -458,7 +460,19 @@
   // before / after
   var ba = document.getElementById('ba');
   var baTimer = null;
+  var dayEl = document.getElementById('stDay'), rungs = ba.querySelectorAll('.stage-rungs i'), dayRaf = 0;
+  function showDay(n){ dayEl.textContent = n; rungs.forEach(function(r, i){ r.classList.toggle('on', i < Math.round(n / 3)); }); }
+  function runDay(to){
+    cancelAnimationFrame(dayRaf);
+    var from = +dayEl.textContent, t0 = performance.now(), d = reduce ? 0 : 1500;
+    (function step(t){
+      var k = d ? Math.min(1, (t - t0) / d) : 1;
+      showDay(Math.round(from + (to - from) * k));
+      if (k < 1) dayRaf = requestAnimationFrame(step);
+    })(t0);
+  }
   function setBA(state){
+    if (ba.dataset.state !== state) runDay(state === 'after' ? 30 : 1);
     ba.dataset.state = state;
     ba.querySelectorAll('[data-set]').forEach(function(x){ x.setAttribute('aria-pressed', String(x.dataset.set === state)); });
   }
