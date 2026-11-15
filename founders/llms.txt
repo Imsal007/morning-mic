@@ -1,0 +1,18 @@
+# Founders' Den
+
+> Founders' Den (by Morning Mic) is a private speaking practice platform for founders. Each member has their own login and a ladder of short modules built around one goal. They practise about ten minutes a morning, record each attempt, compare their first recording with their latest, and unlock the next module only after passing the current one.
+
+## Who it is for
+Busy founders and business owners who avoid public speaking, feel shy on camera or on stage, ramble when explaining their product, have a pitch or talk coming up, or speak English as a second language and want to sound clearer.
+
+## Practice tracks
+- Public speaking: the camera pitch, openings, client stories, Q&A and objections.
+- Articulation: breath and pace (130 to 160 words a minute), clear consonants, stress, intonation, removing filler words.
+- Subject-matter expertise: explaining your field briefly using point, reason, example, point.
+
+## How to join
+Founders' Den is open to a small founding cohort by application. Applicants are onboarded personally and pricing is confirmed on a call.
+
+## Links
+- [Homepage](https://imsal007.github.io/morning-mic/founders/)
+- [Apply](https://imsal007.github.io/morning-mic/founders/#apply)
