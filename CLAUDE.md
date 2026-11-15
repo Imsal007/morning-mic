@@ -1,4 +1,4 @@
-# Morning Mic: project rules
+# Founder Rehearsal: project rules
 
 Read this first. These are standing instructions from the owner for this website and app.
 
@@ -6,18 +6,19 @@ Read this first. These are standing instructions from the owner for this website
 Before any decision or build on this project, run the council skill (`anthropic-skills:council`) on it, then do the work, then show the owner both the council's final call and what was built. Do this every time, without being asked.
 
 ## Brand
-- Name: **Morning Mic**. Tagline: **Take the mic.**
-- One sentence to use everywhere (homepage, metadata, structured data, llms.txt, directories): "Morning Mic is a private speaking practice platform for founders, customised to each founder's needs."
-- Do not use "Founders' Den" (clashes with an existing founders' club).
+- Name: **Founder Rehearsal** (renamed from Morning Mic on 15 Nov 2026). Line: **Rehearse in private. Walk in ready.**
+- One sentence to use everywhere (homepage, metadata, structured data, llms.txt, directories): "Founder Rehearsal is a private speaking practice platform for founders, customised to each founder's needs."
+- Do not use "Founders' Den" (clashes with an existing founders' club) or "Morning Mic" on the founders site.
 - Customisation is a core promise. Every page that describes the product must say modules are built around the founder's own needs, goal and subject.
+- Look: a dark rehearsal room with one warm stage light. Warm black, ivory text, gold accent (`#E2B866`), Newsreader serif for headings, Instrument Sans for text. Tokens are at the top of `founders/styles.css`.
 
 ## Product
 - Each founder has their own login and private space.
 - At registration the founder states their needs (goal, challenge, subject, deadline, time available); modules are then built for them by hand at first.
 - They practise, pass a module only when confident, then unlock the next. Before/after recordings show progress.
 - Three tracks: public speaking, articulation, subject-matter expertise.
-- Root `index.html` is the owner's personal practice tool. Do not modify it unless the owner asks.
-- The marketing site lives in `founders/` for now (served at `/morning-mic/founders/`); it moves to the root of the Morning Mic domain later.
+- Root `index.html` is the owner's personal practice tool (still called Morning Mic). Do not modify it unless the owner asks.
+- The site lives in `founders/`: marketing homepage, `guides/`, and the member room in `app/`. All links are relative, so the folder can be served as the root of `founderrehearsal.com`.
 
 ## Growth: organic search first
 - Win organically by targeting the phrases founders actually search, long and short, e.g. "how to stop saying um", "pitch practice for founders", "public speaking for shy founders", "explain your startup in 60 seconds".
@@ -31,33 +32,44 @@ Before any decision or build on this project, run the council skill (`anthropic-
 
 ## Stack decisions
 - Web app first, store apps later. Gates before building store apps: (1) five founders agree to a call after personal outreach, (2) founders are still practising in week three.
-- Supabase (London region) for logins, database and private recording storage. Cloudflare for domain and DNS. GitHub for hosting. Stripe for payments, on the web.
+- Supabase (London region) for logins, database and private recording storage. Cloudflare for domain and DNS. Stripe for payments, on the web.
 - Voice recordings are personal data (UK GDPR): privacy policy, clear consent at signup, private by default, delete-my-data.
-- Use Sonnet for backend and login work. Remind the owner to switch to Fable (`/model claude-fable-5-2`) for the full design pass once logins work and the screens exist.
+
+## Backend (Supabase)
+- Project `founder-rehearsal`, ref `jjqwmypgkiakkdhffiqu`, region eu-west-2 (London), free tier, in "Imsal007's Org".
+- The project address and publishable key are in `founders/config.js`. They are public by design; row-level rules do the protecting. Never put a secret or service-role key in the repo.
+- Tables: `applications` (public can insert, nobody can read through the API), `profiles`, `modules` (the ladder; founders can read only their own), `recordings` (founders read, add and delete only their own).
+- Private storage bucket `recordings`; files are stored under `<user id>/<module id>/`.
+- A new sign-up automatically gets a profile and a "Your baseline" module, so the "before" recording exists from day one.
+- Functions: `pass_module(module id)` passes the current module and unlocks the next; `delete_my_account()` removes the account and its rows. Both are intentionally callable by signed-in founders (the security advisor lists them as warnings).
+- To build a founder's ladder: add rows to `modules` for their user id with `position` 2, 3, … and `status` `locked` (or `current` if nothing else is in progress). `cues` is a JSON list of strings.
 
 ## Status and handoff (15 Nov 2026)
-Work so far is on branch `claude/affectionate-einstein-0p1j7o`. It is not merged to the main branch yet, so none of `founders/` is live.
+Work is on branch `claude/affectionate-einstein-0p1j7o`. It is not merged and the site is not live.
 
 ### Built
-- `founders/index.html`: Morning Mic marketing homepage (tracks, before/after illustration, ladder, needs-based application form, FAQ, guides teaser). Self-hosted fonts in `founders/assets/fonts`, share image `founders/assets/og.png`.
-- Six guide pages plus an index in `founders/guides/`, with Article, FAQ and breadcrumb markup. `founders/sitemap.xml` and `founders/llms.txt` list them.
-- The application form asks for goals, where they get stuck, what they speak about, comfort, language and time. It sends nowhere yet: `FORM_ENDPOINT` in `founders/index.html` is empty.
+- `founderrehearsal.com` is registered in Cloudflare (expires 15 Nov 2027, auto-renew on). No DNS or hosting is set up yet.
+- Homepage redesigned and renamed, with an animated before/after stage illustration near the top. Guides, sitemap and llms.txt renamed, and all canonical URLs point to `https://founderrehearsal.com/`.
+- Application form saves to the `applications` table (tested: saves, and cannot be read publicly).
+- Member room at `founders/app/`: sign in with Google or an emailed link, consent screen, ladder, recorder with playback, saved takes, first-versus-latest comparison, pass a module, delete a take, delete all data.
 
-### Decisions made
-- Brand is Morning Mic; "Founders' Den" is dropped. Web app first, store apps later (see gates above).
-- Domain plan: register `morningmic.app` as the main address and `getmorningmic.com` as the `.com` that redirects to it. The owner is buying them in Cloudflare; not confirmed bought. `morningmic.com` is taken by an unrelated Arabic radio site registered 21 Oct 2026.
-- Supabase connector is connected on the owner's account, but no project exists yet. Plan: London region, free tier, show the cost confirmation before creating.
-- No prices are shown on the site; the owner has not set one.
+### Not done or not tested
+- Sign-in has not been tested end to end. Google sign-in needs OAuth credentials added in Supabase. The emailed link works only after the site address is added to Supabase's allowed redirect URLs.
+- The member room has only been checked signed out; recording, saving and passing are untested with a real account.
+- `founders/assets/og.png` still shows the old Morning Mic name and colours.
+- No privacy policy or terms pages (need the owner's legal name and contact details).
+- The owner has no admin screen; applications and modules are managed in the Supabase dashboard.
 
 ### Next steps, in order
-1. Once the domains are bought: change canonical, Open Graph and structured-data URLs from `imsal007.github.io/morning-mic/founders/` to the new domain, add a `CNAME` file, and point DNS in Cloudflare.
-2. Create the Supabase project; store applications; wire the form to it.
-3. Founder login, private space, saved recordings, before/after playback, row-level privacy rules.
-4. Privacy policy and terms pages (needs the owner's legal name and contact details). Consent at signup for voice recordings; delete-my-data.
-5. Trademark search for "Morning Mic" (UK and US).
-6. Full design pass with Fable once logins and screens exist; remind the owner to run `/model claude-fable-5-2`.
-7. Personal outreach to founders; write more guides only for phrases that appear in real applications.
+1. Hosting: serve the `founders/` folder as the root of `founderrehearsal.com` (recommended: Cloudflare Pages with `founders` as the output folder, so the owner's personal tool at the repo root stays separate).
+2. In Supabase, set the site URL and redirect URL to `https://founderrehearsal.com/app/`, then add Google sign-in credentials. Test sign-in, recording and delete-my-data with a real account.
+3. New share image (`og.png`) in the new brand.
+4. Privacy policy and terms pages; link them from the consent screen and footer.
+5. Email: `hello@founderrehearsal.com` (Cloudflare Email Routing forwards for free; sending needs a mailbox provider).
+6. Trademark: UK and US register searches found nothing for "Founder Rehearsal" (15 Nov 2026), but the name is descriptive and EU was not checked. Ask a trademark attorney before investing heavily.
+7. A simple owner screen to read applications and write each founder's modules.
+8. Personal outreach to founders; write more guides only for phrases that appear in real applications.
 
 ### Open items to confirm
-- Which branch GitHub Pages serves, so we know where to merge to make `founders/` live.
+- The Cloudflare account's default registrant contact was another person's details; the owner said they would correct it. Confirm the registrant on `founderrehearsal.com`.
 - Whether the owner wants a pull request opened (do not open one unless asked).

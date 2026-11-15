@@ -1,6 +1,6 @@
-# Morning Mic
+# Founder Rehearsal
 
-> Morning Mic is a private speaking practice platform for founders, customised to each founder's needs. Each member has their own login and a ladder of short modules built around their goal and subject. They practise about ten minutes a morning, record each attempt, compare their first recording with their latest, and unlock the next module only after passing the current one.
+> Founder Rehearsal is a private speaking practice platform for founders, customised to each founder's needs. Each member has their own login and a ladder of short modules built around their goal and subject. They practise about ten minutes a morning, record each attempt, compare their first recording with their latest, and unlock the next module only after passing the current one.
 
 ## Who it is for
 Busy founders and business owners who avoid public speaking, feel shy on camera or on stage, ramble when explaining their product, have a pitch or talk coming up, or speak English as a second language and want to sound clearer.
@@ -11,17 +11,17 @@ Busy founders and business owners who avoid public speaking, feel shy on camera 
 - Subject-matter expertise: explaining your field briefly using point, reason, example, point.
 
 ## How to join
-Morning Mic is open to a small founding cohort by application. The application form asks what the founder wants to work on, where they get stuck and what they speak about, and modules are built from those answers. Applicants are onboarded personally and pricing is confirmed on a call.
+Founder Rehearsal is open to a small founding cohort by application. The application form asks what the founder wants to work on, where they get stuck and what they speak about, and modules are built from those answers. Applicants are onboarded personally and pricing is confirmed on a call.
 
 ## Guides
-- [All guides](https://imsal007.github.io/morning-mic/founders/guides/)
-- [How to stop saying um](https://imsal007.github.io/morning-mic/founders/guides/stop-saying-um/): Fillers like um, like and basically are your brain buying time. Here is a five-step way to replace them with a calm pause, with a drill you can do in five minutes.
-- [Pitch practice for founders](https://imsal007.github.io/morning-mic/founders/guides/pitch-practice-for-founders/): Practise your pitch out loud, in short sections, and listen back. A step-by-step method for founders to rehearse an investor pitch alone, with a timer and a recording.
-- [Public speaking for shy founders](https://imsal007.github.io/morning-mic/founders/guides/public-speaking-for-shy-founders/): Shy founders can build speaking confidence in small steps, starting in private. A practical ladder from reading aloud alone to speaking on camera or on stage.
-- [Explain your startup in 60 seconds](https://imsal007.github.io/morning-mic/founders/guides/explain-your-startup-in-60-seconds/): A simple structure for a clear 60-second startup pitch: who it is for, the problem, what you do, proof and the ask. Includes a fill-in template and an example.
-- [Speak slower and more clearly](https://imsal007.github.io/morning-mic/founders/guides/speak-slower-and-clearer/): Clear speech comes from pace, breath, finished word endings and stress on the right words. Practical exercises for founders, including tips for second-language speakers.
-- [Answer hard investor questions](https://imsal007.github.io/morning-mic/founders/guides/answer-investor-questions/): Use agree, ask, answer to handle tough investor questions calmly, and a four-part structure to keep every answer short. Includes questions to practise and what to say when you do not know.
+- [All guides](https://founderrehearsal.com/guides/)
+- [How to stop saying um](https://founderrehearsal.com/guides/stop-saying-um/): Fillers like um, like and basically are your brain buying time. Here is a five-step way to replace them with a calm pause, with a drill you can do in five minutes.
+- [Pitch practice for founders](https://founderrehearsal.com/guides/pitch-practice-for-founders/): Practise your pitch out loud, in short sections, and listen back. A step-by-step method for founders to rehearse an investor pitch alone, with a timer and a recording.
+- [Public speaking for shy founders](https://founderrehearsal.com/guides/public-speaking-for-shy-founders/): Shy founders can build speaking confidence in small steps, starting in private. A practical ladder from reading aloud alone to speaking on camera or on stage.
+- [Explain your startup in 60 seconds](https://founderrehearsal.com/guides/explain-your-startup-in-60-seconds/): A simple structure for a clear 60-second startup pitch: who it is for, the problem, what you do, proof and the ask. Includes a fill-in template and an example.
+- [Speak slower and more clearly](https://founderrehearsal.com/guides/speak-slower-and-clearer/): Clear speech comes from pace, breath, finished word endings and stress on the right words. Practical exercises for founders, including tips for second-language speakers.
+- [Answer hard investor questions](https://founderrehearsal.com/guides/answer-investor-questions/): Use agree, ask, answer to handle tough investor questions calmly, and a four-part structure to keep every answer short. Includes questions to practise and what to say when you do not know.
 
 ## Links
-- [Homepage](https://imsal007.github.io/morning-mic/founders/)
-- [Apply](https://imsal007.github.io/morning-mic/founders/#apply)
+- [Homepage](https://founderrehearsal.com/)
+- [Apply](https://founderrehearsal.com/#apply)

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Your room | Founder Rehearsal</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="theme-color" content="#0C0B0A">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/newsreader.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="app.css">
+</head>
+<body class="app">
+
+<header class="nav scrolled">
+  <div class="wrap">
+    <a class="brand" href="../" aria-label="Founder Rehearsal home">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#1F1C19"/><path d="M17 47V31a15 15 0 0 1 30 0v16" fill="none" stroke="#E2B866" stroke-width="4.5" stroke-linecap="round"/><circle cx="32" cy="39" r="5" fill="#E2B866"/></svg>
+      Founder Rehearsal
+    </a>
+    <div class="who" id="who" hidden>
+      <span id="whoName"></span>
+      <button class="btn btn-ghost btn-sm" id="btnAccount" type="button">Account</button>
+      <button class="btn btn-ghost btn-sm" id="btnOut" type="button">Sign out</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <p class="wrap loading" id="v-load" role="status">Opening your room…</p>
+
+  <!-- signed out -->
+  <section class="door" id="v-out" hidden>
+    <div class="door-card">
+      <span class="eyebrow">Members</span>
+      <h1>Your room is <em>through here.</em></h1>
+      <p class="lede">Sign in to your private space. There is no password to remember.</p>
+      <button class="btn btn-google" id="btnGoogle" type="button">
+        <svg viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.92c1.7-1.57 2.68-3.88 2.68-6.62z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.18l-2.92-2.26c-.8.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.7H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.97 10.72a5.4 5.4 0 0 1 0-3.44V4.95H.96a9 9 0 0 0 0 8.1l3.01-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58A9 9 0 0 0 .96 4.95l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/></svg>
+        Continue with Google
+      </button>
+      <div class="or"><span>or</span></div>
+      <form id="linkForm" class="plain" novalidate>
+        <label>Email<input id="linkEmail" type="email" autocomplete="email" required placeholder="you@company.com"></label>
+        <button class="btn btn-ghost" type="submit">Email me a sign-in link</button>
+      </form>
+      <p class="msg" id="outMsg" role="status" aria-live="polite"></p>
+      <p class="fine">Not a member yet? <a href="../#apply">Apply for the founding cohort</a>.</p>
+    </div>
+  </section>
+
+  <!-- consent, first visit -->
+  <section class="door" id="v-consent" hidden>
+    <div class="door-card">
+      <span class="eyebrow">Before you record</span>
+      <h1>Your voice stays <em>yours.</em></h1>
+      <ul class="list">
+        <li><span><b>Private by default.</b> Your takes are stored in your own space. Other members cannot see or hear them.</span></li>
+        <li><span><b>Used for one thing.</b> We keep recordings so you can play them back and compare. Nothing else.</span></li>
+        <li><span><b>Yours to delete.</b> Remove a single take, or your whole account and every recording, at any time from Account.</span></li>
+      </ul>
+      <label class="opt"><input type="checkbox" id="consentBox"><div>I agree to Founder Rehearsal storing my voice recordings so that I can review my own practice.</div></label>
+      <button class="btn btn-primary" id="btnConsent" type="button" disabled>Enter my room</button>
+      <p class="msg" id="consentMsg" role="status" aria-live="polite"></p>
+    </div>
+  </section>
+
+  <!-- the room -->
+  <section class="room wrap" id="v-room" hidden>
+    <aside class="side">
+      <span class="eyebrow">Your ladder</span>
+      <ol class="ladder" id="ladder"></ol>
+      <p class="ladder-cap" id="ladderNote"></p>
+      <div class="compare" id="compare" hidden>
+        <span class="eyebrow">Before and after</span>
+        <div class="cmp"><span>First take <small id="cmpFirstWhen"></small></span><audio id="cmpFirst" controls preload="none"></audio></div>
+        <div class="cmp"><span>Latest take <small id="cmpLastWhen"></small></span><audio id="cmpLast" controls preload="none"></audio></div>
+      </div>
+    </aside>
+
+    <div class="work" id="work">
+      <div class="mod-head">
+        <span class="eyebrow" id="modKicker"></span>
+        <h1 id="modTitle"></h1>
+        <p class="lede" id="modBrief"></p>
+        <p class="rule" id="modRule"></p>
+      </div>
+
+      <div class="cues" id="cues" role="group" aria-label="Choose a cue"></div>
+      <div class="cue big" id="cueText"></div>
+
+      <div class="recorder" id="recorder">
+        <button class="recbtn" id="btnRec" type="button" aria-pressed="false"><i></i><span id="recLabel">Record</span></button>
+        <div class="rec-meta">
+          <b id="recTime">0:00</b>
+          <span id="recHint">Read the cue, then press record. Three minutes at most.</span>
+        </div>
+      </div>
+
+      <div class="review" id="review" hidden>
+        <audio id="reviewAudio" controls></audio>
+        <div class="cta-row">
+          <button class="btn btn-primary btn-sm" id="btnKeep" type="button">Keep this take</button>
+          <button class="btn btn-ghost btn-sm" id="btnDiscard" type="button">Discard</button>
+        </div>
+      </div>
+      <p class="msg" id="roomMsg" role="status" aria-live="polite"></p>
+
+      <div class="takes">
+        <h2>Takes on this module</h2>
+        <ul id="takes"></ul>
+      </div>
+
+      <div class="pass" id="passBox" hidden>
+        <div>
+          <h2>Ready to move on?</h2>
+          <p>Pass a module when you meet its rule and you feel sure of it. The next one unlocks.</p>
+        </div>
+        <button class="btn btn-primary" id="btnPass" type="button">I'm confident. Pass this module</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<dialog id="account">
+  <h2>Account</h2>
+  <p class="fine" id="accEmail"></p>
+  <h3>Delete my data</h3>
+  <p>This removes your account, your ladder and every recording. It cannot be undone.</p>
+  <label>Type DELETE to confirm<input id="delWord" autocomplete="off"></label>
+  <p class="msg" id="accMsg" role="status" aria-live="polite"></p>
+  <div class="cta-row">
+    <button class="btn btn-danger btn-sm" id="btnDelete" type="button" disabled>Delete everything</button>
+    <button class="btn btn-ghost btn-sm" id="btnAccClose" type="button">Close</button>
+  </div>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="../config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
