@@ -50,6 +50,10 @@ Work is on branch `claude/affectionate-einstein-0p1j7o`. That branch is the prod
 
 ### Built
 - `founderrehearsal.com` is registered in Cloudflare (expires 15 Nov 2027, auto-renew on) and live on Cloudflare Pages (project `founder-rehearsal`, output folder `founders`, also at `founder-rehearsal.pages.dev`).
+- Automatic deploys work: the Cloudflare GitHub app has access to `morning-mic` only (17 Nov 2026).
+- Google Search Console: domain property verified (SAL Digital Google account, DNS TXT record); sitemap read successfully, 8 pages. `robots.txt` and a real `404.html` are live.
+- Email: `hello@founderrehearsal.com` forwards to the SAL Digital Gmail (Cloudflare Email Routing).
+- Tracker: Google Sheet "Founder Rehearsal: SEO and growth tracker" in the SAL Digital Drive (keyword map, routines, launch checklist, first 5 clients).
 - Supabase sign-in: site URL and redirect URLs are set to `https://founderrehearsal.com/app/` and `https://founder-rehearsal.pages.dev/app/`.
 - Homepage redesigned and renamed, with an animated before/after stage illustration near the top. Guides, sitemap and llms.txt renamed, and all canonical URLs point to `https://founderrehearsal.com/`.
 - Application form saves to the `applications` table (tested: saves, and cannot be read publicly).
@@ -57,7 +61,6 @@ Work is on branch `claude/affectionate-einstein-0p1j7o`. That branch is the prod
 
 ### Not done or not tested
 - Sign-in has not been tested end to end. Google sign-in needs a Google OAuth client ID and secret added in Supabase (Authentication, Sign In / Providers, Google); the callback URL is `https://jjqwmypgkiakkdhffiqu.supabase.co/auth/v1/callback`.
-- Cloudflare shows a "disconnected from your Git account" warning on the Pages project, so automatic deploys on push may fail until the GitHub connection is re-authorised.
 - The member room has only been checked signed out; recording, saving and passing are untested with a real account.
 - `founders/assets/og.png` still shows the old Morning Mic name and colours.
 - No privacy policy or terms pages (need the owner's legal name and contact details).
