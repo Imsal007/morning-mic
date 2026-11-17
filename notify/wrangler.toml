@@ -1,0 +1,15 @@
+# Emails the owner when someone applies on founderrehearsal.com.
+# The recipient address is set as the ALERT_TO variable in the Cloudflare dashboard (kept out of this public repo).
+name = "fr-notify"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+keep_vars = true
+workers_dev = true
+
+[[send_email]]
+name = "MAIL"
+
+[vars]
+SUPABASE_URL = "https://jjqwmypgkiakkdhffiqu.supabase.co"
+SUPABASE_KEY = "sb_publishable_KQYEDntX6p0VoUvJF41RqQ_yk8TRI7T"
+FROM = "alerts@founderrehearsal.com"
