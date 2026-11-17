@@ -42,7 +42,7 @@ Before any decision or build on this project, run the council skill (`anthropic-
 - Tables: `applications` (public can insert, nobody can read through the API), `profiles`, `modules` (the ladder; founders can read only their own), `recordings` (founders read, add and delete only their own).
 - Private storage bucket `recordings`; files are stored under `<user id>/<module id>/`.
 - A new sign-up automatically gets a profile and a "Your baseline" module, so the "before" recording exists from day one.
-- Functions: `pass_module(module id)` passes the current module and unlocks the next; `delete_my_account()` removes the account and its rows. Both are intentionally callable by signed-in founders (the security advisor lists them as warnings).
+- `claim_application_alert(id)` is intentionally callable without signing in (ids are random and never sent to the browser). Functions: `pass_module(module id)` passes the current module and unlocks the next; `delete_my_account()` removes the account and its rows. Both are intentionally callable by signed-in founders (the security advisor lists them as warnings).
 - To build a founder's ladder: add rows to `modules` for their user id with `position` 2, 3, … and `status` `locked` (or `current` if nothing else is in progress). `cues` is a JSON list of strings.
 
 ## Status and handoff (15 Nov 2026)
@@ -53,6 +53,8 @@ Work is on branch `claude/affectionate-einstein-0p1j7o`. That branch is the prod
 - Automatic deploys work: the Cloudflare GitHub app has access to `morning-mic` only (17 Nov 2026).
 - Google Search Console: domain property verified (SAL Digital Google account, DNS TXT record); sitemap read successfully, 8 pages. `robots.txt` and a real `404.html` are live.
 - Email: `hello@founderrehearsal.com` forwards to the SAL Digital Gmail (Cloudflare Email Routing).
+- Application alerts (17 Nov 2026, tested): a new row in `applications` fires a database trigger (`private.notify_new_application`, URL in `private.settings`) that posts the row id to the Cloudflare Worker `fr-notify` (`notify/`, deployed by Workers Builds from this repo and branch). The worker calls `claim_application_alert` (returns details once, within 15 minutes) and emails the SAL Digital Gmail via Email Routing, from `alerts@founderrehearsal.com`, with Reply-To set to the applicant. The recipient is the `ALERT_TO` variable in the Cloudflare dashboard, kept out of this public repo.
+- Guides page is a blog-style grid (layout modelled on blotato.com/blog) with inline SVG covers and topic filters.
 - Tracker: Google Sheet "Founder Rehearsal: SEO and growth tracker" in the SAL Digital Drive (keyword map, routines, launch checklist, first 5 clients).
 - Supabase sign-in: site URL and redirect URLs are set to `https://founderrehearsal.com/app/` and `https://founder-rehearsal.pages.dev/app/`.
 - Homepage redesigned and renamed, with an animated before/after stage illustration near the top. Guides, sitemap and llms.txt renamed, and all canonical URLs point to `https://founderrehearsal.com/`.
