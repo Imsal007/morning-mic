@@ -1,4 +1,4 @@
-// Founder Rehearsal application alerts.
+// Founder Rehearsal application alerts (worker: fr-notify).
 // The database pings this worker with an application id. The worker claims that
 // application's details from the database (allowed once, within 15 minutes) and
 // emails them to the owner. No secrets are needed: ids are random and never public.
