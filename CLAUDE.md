@@ -77,5 +77,5 @@ Work is on branch `claude/affectionate-einstein-0p1j7o`. That branch is the prod
 8. Personal outreach to founders; write more guides only for phrases that appear in real applications.
 
 ### Open items to confirm
-- The Cloudflare account's default registrant contact was another person's details; the owner said they would correct it. Confirm the registrant on `founderrehearsal.com`.
+- Registrant on `founderrehearsal.com` confirmed as the owner (17 Nov 2026). The Cloudflare account also holds a client domain, `farleyfitnesspt.co.uk`, and its Pages project `samuel-farley-pt-demo`; never change those when working on Founder Rehearsal.
 - Whether the owner wants a pull request opened (do not open one unless asked).
