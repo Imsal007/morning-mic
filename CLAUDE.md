@@ -10,7 +10,8 @@ Before any decision or build on this project, run the council skill (`anthropic-
 - One sentence to use everywhere (homepage, metadata, structured data, llms.txt, directories): "Founder Rehearsal is a private speaking practice platform for founders, customised to each founder's needs."
 - Do not use "Founders' Den" (clashes with an existing founders' club) or "Morning Mic" on the founders site.
 - Customisation is a core promise. Every page that describes the product must say modules are built around the founder's own needs, goal and subject.
-- Look: a dark rehearsal room with one warm stage light. Warm black, ivory text, gold accent (`#E2B866`), Newsreader serif for headings, Instrument Sans for text. Tokens are at the top of `founders/styles.css`.
+- Look: teal (`#45BDB3`) on dark navy (`#0A0F14`), Bricolage Grotesque headings with Newsreader italic for emphasis, Instrument Sans for text. Tokens are at the top of `founders/styles.css`. The owner chose this look; never change colours, fonts, logo or name without asking first.
+- Logo: a founder in a spotlight (teal on navy). Replaced the sound-wave bars on 16 Nov 2026.
 
 ## Product
 - Each founder has their own login and private space.
@@ -45,24 +46,26 @@ Before any decision or build on this project, run the council skill (`anthropic-
 - To build a founder's ladder: add rows to `modules` for their user id with `position` 2, 3, … and `status` `locked` (or `current` if nothing else is in progress). `cues` is a JSON list of strings.
 
 ## Status and handoff (15 Nov 2026)
-Work is on branch `claude/affectionate-einstein-0p1j7o`. It is not merged and the site is not live.
+Work is on branch `claude/affectionate-einstein-0p1j7o`. That branch is the production branch for Cloudflare Pages, so every push to it deploys the live site.
 
 ### Built
-- `founderrehearsal.com` is registered in Cloudflare (expires 15 Nov 2027, auto-renew on). No DNS or hosting is set up yet.
+- `founderrehearsal.com` is registered in Cloudflare (expires 15 Nov 2027, auto-renew on) and live on Cloudflare Pages (project `founder-rehearsal`, output folder `founders`, also at `founder-rehearsal.pages.dev`).
+- Supabase sign-in: site URL and redirect URLs are set to `https://founderrehearsal.com/app/` and `https://founder-rehearsal.pages.dev/app/`.
 - Homepage redesigned and renamed, with an animated before/after stage illustration near the top. Guides, sitemap and llms.txt renamed, and all canonical URLs point to `https://founderrehearsal.com/`.
 - Application form saves to the `applications` table (tested: saves, and cannot be read publicly).
 - Member room at `founders/app/`: sign in with Google or an emailed link, consent screen, ladder, recorder with playback, saved takes, first-versus-latest comparison, pass a module, delete a take, delete all data.
 
 ### Not done or not tested
-- Sign-in has not been tested end to end. Google sign-in needs OAuth credentials added in Supabase. The emailed link works only after the site address is added to Supabase's allowed redirect URLs.
+- Sign-in has not been tested end to end. Google sign-in needs a Google OAuth client ID and secret added in Supabase (Authentication, Sign In / Providers, Google); the callback URL is `https://jjqwmypgkiakkdhffiqu.supabase.co/auth/v1/callback`.
+- Cloudflare shows a "disconnected from your Git account" warning on the Pages project, so automatic deploys on push may fail until the GitHub connection is re-authorised.
 - The member room has only been checked signed out; recording, saving and passing are untested with a real account.
 - `founders/assets/og.png` still shows the old Morning Mic name and colours.
 - No privacy policy or terms pages (need the owner's legal name and contact details).
 - The owner has no admin screen; applications and modules are managed in the Supabase dashboard.
 
 ### Next steps, in order
-1. Hosting: serve the `founders/` folder as the root of `founderrehearsal.com` (recommended: Cloudflare Pages with `founders` as the output folder, so the owner's personal tool at the repo root stays separate).
-2. In Supabase, set the site URL and redirect URL to `https://founderrehearsal.com/app/`, then add Google sign-in credentials. Test sign-in, recording and delete-my-data with a real account.
+1. Add Google sign-in credentials in Supabase.
+2. Test sign-in, recording and delete-my-data with a real account.
 3. New share image (`og.png`) in the new brand.
 4. Privacy policy and terms pages; link them from the consent screen and footer.
 5. Email: `hello@founderrehearsal.com` (Cloudflare Email Routing forwards for free; sending needs a mailbox provider).
