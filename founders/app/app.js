@@ -18,6 +18,11 @@
   var user = null, modules = [], takes = [], open = null, cueIdx = 0, urls = {};
 
   /* ---------- sign in ---------- */
+  // Show Google only once it is switched on in the project; otherwise the button leads to an error page.
+  fetch(cfg.url + '/auth/v1/settings', { headers: { apikey: cfg.key } })
+    .then(function (r) { return r.json(); })
+    .then(function (s) { if (s && s.external && s.external.google) { $('btnGoogle').hidden = false; $('orRow').hidden = false; } })
+    .catch(function () {});
   $('btnGoogle').addEventListener('click', function () {
     say($('outMsg'));
     sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: here } }).then(function (r) {
@@ -31,7 +36,7 @@
     var btn = e.target.querySelector('button'); btn.disabled = true;
     sb.auth.signInWithOtp({ email: input.value.trim(), options: { emailRedirectTo: here } }).then(function (r) {
       btn.disabled = false;
-      if (r.error) say($('outMsg'), 'err', 'That did not send. Check the address and try again in a minute.');
+      if (r.error) say($('outMsg'), 'err', r.error.code === 'email_address_not_authorized' ? 'Member sign-in is not open to this address yet. Email hello@founderrehearsal.com and we will help.' : 'That did not send. Check the address and try again in a minute.');
       else say($('outMsg'), 'ok', 'Check your inbox. The link signs you in on this device.');
     });
   });
