@@ -348,5 +348,5 @@ html:not(.js) .stage{display:none}
 .article .sources li{font-size:15px;color:var(--muted);overflow-wrap:anywhere}
 .blog-faq{margin-top:72px;padding:0}
 
-footer a.pref-source{border:1px solid var(--line);border-radius:999px;padding:7px 13px;color:var(--ink)}
-footer a.pref-source:hover{border-color:var(--accent)}
+/* buttons inside articles keep their own text colour (the article link colour was overriding it) */
+.article a.btn-primary,.article a.btn-primary:hover{color:var(--accent-ink);text-decoration:none}
