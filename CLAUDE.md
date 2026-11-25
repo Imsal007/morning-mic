@@ -50,9 +50,9 @@ Work is on branch `claude/affectionate-einstein-0p1j7o`. That branch is the prod
 
 ### Built
 - `founderrehearsal.com` is registered in Cloudflare (expires 15 Nov 2027, auto-renew on) and live on Cloudflare Pages (project `founder-rehearsal`, output folder `founders`, also at `founder-rehearsal.pages.dev`).
-- Automatic deploys work: the Cloudflare GitHub app has access to `morning-mic` only (17 Nov 2026).
+- Automatic deploys work through the Cloudflare GitHub app.
 - `www.founderrehearsal.com` (25 Nov 2026, tested): proxied A record `www` to 192.0.2.1, a 301 Single Redirect from `https://www.*` keeping path and query, and Always Use HTTPS on for this zone.
-- Client site note: the repo `samuel-farley-pt-demo` was renamed `samuel-farley-pt` (same repo). On 17 Nov its access was removed from the Cloudflare GitHub app at the owner's request, so pushes to it will not deploy until access is restored. The owner keeps all business domains in this one Cloudflare account.
+- Client site note: the repo `samuel-farley-pt-demo` was renamed `samuel-farley-pt` (same repo). Its Cloudflare GitHub access was removed on 17 Nov at the owner's request and restored on 25 Nov; the app now has `morning-mic` and `samuel-farley-pt`. Keep both selected. The owner keeps all business domains in this one Cloudflare account.
 - Google Search Console: domain property verified (SAL Digital Google account, DNS TXT record); sitemap read successfully, 8 pages. `robots.txt` and a real `404.html` are live.
 - Email: `hello@founderrehearsal.com` forwards to the SAL Digital Gmail (Cloudflare Email Routing).
 - Application alerts (17 Nov 2026, tested): a new row in `applications` fires a database trigger (`private.notify_new_application`, URL in `private.settings`) that posts the row id to the Cloudflare Worker `fr-notify` (`notify/`, deployed by Workers Builds from this repo and branch). The worker calls `claim_application_alert` (returns details once, within 15 minutes) and emails the SAL Digital Gmail via Email Routing, from `alerts@founderrehearsal.com`, with Reply-To set to the applicant. The recipient is the `ALERT_TO` variable in the Cloudflare dashboard, kept out of this public repo.
