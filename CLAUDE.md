@@ -3,7 +3,7 @@
 Read this first. These are standing instructions from the owner for this website and app.
 
 ## Standing rule
-Before any decision or build on this project, run the council skill (`anthropic-skills:council`) on it, then do the work, then show the owner both the council's final call and what was built. Do this every time, without being asked.
+Before any decision or build on this project (design, backend, SEO, blogs, settings), run the council skill (`council:council`) on it, then do the work, check the work against the council's points, then show the owner both the final call and what was built. Do this every time, without being asked. SEO and AEO apply to every page, not only blog posts.
 
 ## Brand
 - Name: **Founder Rehearsal** (renamed from Morning Mic on 15 Nov 2026). Line: **Rehearse in private. Walk in ready.**
@@ -54,7 +54,10 @@ Work is on branch `claude/affectionate-einstein-0p1j7o`. That branch is the prod
 - Google Search Console: domain property verified (SAL Digital Google account, DNS TXT record); sitemap read successfully, 8 pages. `robots.txt` and a real `404.html` are live.
 - Email: `hello@founderrehearsal.com` forwards to the SAL Digital Gmail (Cloudflare Email Routing).
 - Application alerts (17 Nov 2026, tested): a new row in `applications` fires a database trigger (`private.notify_new_application`, URL in `private.settings`) that posts the row id to the Cloudflare Worker `fr-notify` (`notify/`, deployed by Workers Builds from this repo and branch). The worker calls `claim_application_alert` (returns details once, within 15 minutes) and emails the SAL Digital Gmail via Email Routing, from `alerts@founderrehearsal.com`, with Reply-To set to the applicant. The recipient is the `ALERT_TO` variable in the Cloudflare dashboard, kept out of this public repo.
-- Guides page is a blog-style grid (layout modelled on blotato.com/blog) with inline SVG covers and topic filters.
+- Guides page is a blog-style grid (layout modelled on blotato.com/blog) with inline SVG covers, topic filters and its own FAQ.
+- 25 Nov 2026: all six posts rewritten as long guides (about 800 to 1,200 words each) with checked sources, table of contents, per-page FAQ and BlogPosting/FAQPage/Breadcrumb markup. New `og.png` and `apple-touch-icon.png`. Cite only sources you have opened; a search summary wrongly said video feedback helps speaking anxiety (Smits 2006 found it did not).
+- Search Console on 25 Nov before this change: 0 indexed, 5 "Crawled - currently not indexed", 8 impressions, 0 clicks.
+- Supabase free tier pauses after about a week of low database activity; it was paused and restored on 25 Nov. No keep-alive is set up yet.
 - Tracker: Google Sheet "Founder Rehearsal: SEO and growth tracker" in the SAL Digital Drive (keyword map, routines, launch checklist, first 5 clients).
 - Supabase sign-in: site URL and redirect URLs are set to `https://founderrehearsal.com/app/` and `https://founder-rehearsal.pages.dev/app/`.
 - Homepage redesigned and renamed, with an animated before/after stage illustration near the top. Guides, sitemap and llms.txt renamed, and all canonical URLs point to `https://founderrehearsal.com/`.
@@ -64,7 +67,6 @@ Work is on branch `claude/affectionate-einstein-0p1j7o`. That branch is the prod
 ### Not done or not tested
 - Sign-in has not been tested end to end. Google sign-in needs a Google OAuth client ID and secret added in Supabase (Authentication, Sign In / Providers, Google); the callback URL is `https://jjqwmypgkiakkdhffiqu.supabase.co/auth/v1/callback`.
 - The member room has only been checked signed out; recording, saving and passing are untested with a real account.
-- `founders/assets/og.png` still shows the old Morning Mic name and colours.
 - No privacy policy or terms pages (need the owner's legal name and contact details).
 - The owner has no admin screen; applications and modules are managed in the Supabase dashboard.
 
