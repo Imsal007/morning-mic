@@ -347,3 +347,6 @@ html:not(.js) .stage{display:none}
 .article tbody tr:last-child td{border-bottom:0}
 .article .sources li{font-size:15px;color:var(--muted);overflow-wrap:anywhere}
 .blog-faq{margin-top:72px;padding:0}
+
+footer a.pref-source{border:1px solid var(--line);border-radius:999px;padding:7px 13px;color:var(--ink)}
+footer a.pref-source:hover{border-color:var(--accent)}
