@@ -9,7 +9,7 @@
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="../assets/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../styles.css?v=ea8f9fd8">
-<link rel="stylesheet" href="app.css?v=de292c6a">
+<link rel="stylesheet" href="app.css?v=aa488674">
 </head>
 <body class="app">
 
@@ -48,6 +48,7 @@
       </form>
       <p class="msg" id="outMsg" role="status" aria-live="polite"></p>
       <p class="fine">Not a member yet? <a href="../#apply">Apply for the founding cohort</a>.</p>
+      <p class="fine">For members aged 18 or over. By signing in you agree to our <a href="../terms/">terms of use</a>. See how we handle your data in our <a href="../privacy/">privacy policy</a> and <a href="../cookies/">cookies page</a>.</p>
     </div>
   </section>
 
@@ -58,10 +59,11 @@
       <h1>Your voice stays <em>yours.</em></h1>
       <ul class="list">
         <li><span><b>Private by default.</b> Your takes are stored in your own space. Other members cannot see or hear them.</span></li>
-        <li><span><b>Used for one thing.</b> We keep recordings so you can play them back and compare. Nothing else.</span></li>
+        <li><span><b>Used for your practice.</b> We keep recordings so you can play them back and compare. We do not use them in adverts or to train AI.</span></li>
         <li><span><b>Yours to delete.</b> Remove a single take, or your whole account and every recording, at any time from My profile.</span></li>
       </ul>
       <label class="opt"><input type="checkbox" id="consentBox"><div>I agree to Founder Rehearsal storing my voice recordings so that I can review my own practice.</div></label>
+      <p class="fine">You can withdraw this at any time by deleting your recordings or account. Read our <a href="../privacy/">privacy policy</a>.</p>
       <button class="btn btn-primary" id="btnConsent" type="button" disabled>Enter my room</button>
       <p class="msg" id="consentMsg" role="status" aria-live="polite"></p>
     </div>
@@ -222,6 +224,7 @@
     <div class="panel quiet">
       <h2>Privacy and data</h2>
       <p>Your recordings are private to your room. On the practice page you can delete any saved recording or score. Audio is saved only when you choose to keep it.</p>
+      <p><a href="../privacy/" target="_blank" rel="noopener">Privacy policy</a> &middot; <a href="../terms/" target="_blank" rel="noopener">Terms</a> &middot; <a href="../cookies/" target="_blank" rel="noopener">Cookies</a></p>
       <button class="btn btn-ghost btn-sm" id="btnAskDelete" type="button">Delete my account and data</button>
     </div>
   </section>
