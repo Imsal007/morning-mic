@@ -1,15 +1,27 @@
 /* Founder Rehearsal: analytics with consent. Public pages only; never add this file to the member room (app/).
-   Nothing is requested from Google unless the visitor presses Accept. */
+   Nothing is requested from Google Analytics or Microsoft Clarity unless the visitor presses Accept. */
 (function () {
   'use strict';
   if (/\/app(\/|$)/.test(location.pathname)) return;
-  var ID = 'G-EEWT6MLNNY', KEY = 'fr-analytics', SIX_MONTHS = 183 * 864e5;
+  var ID = 'G-EEWT6MLNNY', CLARITY = 'zjxc817b0y', KEY = 'fr-analytics-2', OLD_KEY = 'fr-analytics', SIX_MONTHS = 183 * 864e5;
   var live = /(^|\.)founderrehearsal\.com$/.test(location.hostname); // never send test visits
   var loaded = false, banner = null;
 
-  function read() {
-    try { var v = JSON.parse(localStorage.getItem(KEY)); if (v && Date.now() - v.at < SIX_MONTHS) return v.choice; } catch (e) {}
+  function stored(key) {
+    try { var v = JSON.parse(localStorage.getItem(key)); if (v && Date.now() - v.at < SIX_MONTHS) return v.choice; } catch (e) {}
     return null;
+  }
+  // Adding Clarity changed what people are agreeing to: an earlier "yes" is asked again, an earlier "no" still counts.
+  function read() { return stored(KEY) || (stored(OLD_KEY) === 'denied' ? 'denied' : null); }
+
+  function loadClarity() {
+    // mask everything from the first moment, whatever the project settings say
+    document.body.setAttribute('data-clarity-mask', 'True');
+    window.clarity = window.clarity || function () { (window.clarity.q = window.clarity.q || []).push(arguments); };
+    window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'granted' });
+    if (!live) return;
+    var s = document.createElement('script'); s.async = true; s.src = 'https://www.clarity.ms/tag/' + CLARITY;
+    document.head.appendChild(s);
   }
   function save(choice) { try { localStorage.setItem(KEY, JSON.stringify({ choice: choice, at: Date.now() })); } catch (e) {} }
 
@@ -17,6 +29,7 @@
     window['ga-disable-' + ID] = false;
     if (loaded) return;
     loaded = true;
+    loadClarity();
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () { window.dataLayer.push(arguments); };
     window.gtag('consent', 'default', { analytics_storage: 'granted', ad_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied' });
@@ -30,7 +43,7 @@
     var hosts = ['', location.hostname, '.' + location.hostname.replace(/^www\./, '')];
     document.cookie.split(';').forEach(function (c) {
       var name = c.split('=')[0].trim();
-      if (!/^_ga/.test(name)) return;
+      if (!/^(_ga|_cl[cs]k)/.test(name)) return;
       hosts.forEach(function (h) { document.cookie = name + '=; Max-Age=0; path=/' + (h ? '; domain=' + h : ''); });
     });
   }
@@ -38,8 +51,10 @@
     var before = read();
     save(choice); close();
     if (choice === 'granted') { load(); return; }
-    window['ga-disable-' + ID] = true; removeCookies();
-    if (before === 'granted' && loaded) location.reload(); // start clean, without Google's script
+    window['ga-disable-' + ID] = true;
+    if (loaded && window.clarity) { window.clarity('consentv2', { ad_Storage: 'denied', analytics_Storage: 'denied' }); window.clarity('consent', false); }
+    removeCookies();
+    if (before === 'granted' && loaded) location.reload(); // start clean, without either script
   }
 
   // events carry a name only: never pass anything a person typed
@@ -55,7 +70,7 @@
     banner = document.createElement('section');
     banner.className = 'consent'; banner.setAttribute('aria-label', 'Analytics choice');
     var p = document.createElement('p');
-    p.textContent = 'May we use Google Analytics to see which pages help visitors? It sets cookies only if you accept, and it is never used in the member room. ';
+    p.textContent = 'May we use Google Analytics and Microsoft Clarity to see which pages help visitors? Clarity replays clicks and scrolling, with page text and typing masked. Both load only if you accept, never in the member room. ';
     var link = document.createElement('a'); link.href = privacyHref(); link.textContent = 'Cookie details';
     p.appendChild(link);
     var row = document.createElement('div');
