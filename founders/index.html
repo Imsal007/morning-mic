@@ -522,7 +522,7 @@
     var btn = form.querySelector('button'); btn.disabled = true;
     fetch(cfg.url + '/rest/v1/applications', {method:'POST',
       headers:{'apikey':cfg.key, 'Content-Type':'application/json', 'Prefer':'return=minimal'}, body:JSON.stringify(row)})
-      .then(function(r){ if (!r.ok) throw 0; form.reset(); say('ok', 'Thank you. Your application is in, and we will reply personally.'); })
+      .then(function(r){ if (!r.ok) throw 0; form.reset(); say('ok', 'Thank you. Your application is in, and we will reply personally.'); if (window.frTrack) window.frTrack('application_sent'); })
       .catch(function(){ say('err', 'That did not send. Please try again in a moment.'); })
       .then(function(){ btn.disabled = false; });
   });
@@ -538,5 +538,6 @@
   }
 })();
 </script>
+<script src="analytics.js?v=48fefb16"></script>
 </body>
 </html>
