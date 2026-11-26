@@ -4,8 +4,8 @@
   'use strict';
   var cfg = window.FR || {};
   var $ = function (id) { return document.getElementById(id); };
-  var views = { load: $('v-load'), out: $('v-out'), consent: $('v-consent'), room: $('v-room') };
-  function show(name) { for (var k in views) views[k].hidden = k !== name; $('who').hidden = name !== 'room'; }
+  var views = { load: $('v-load'), out: $('v-out'), consent: $('v-consent'), room: $('v-room'), profile: $('v-profile') };
+  function show(name) { for (var k in views) views[k].hidden = k !== name; $('who').hidden = name !== 'room' && name !== 'profile'; $('btnProfile').textContent = name === 'profile' ? 'Back to practice' : 'My profile'; }
   function say(el, kind, text) { el.className = 'msg' + (kind ? ' ' + kind : ''); el.textContent = text || ''; }
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
   function clock(s) { s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
@@ -45,7 +45,7 @@
   sb.auth.onAuthStateChange(function (event, session) {
     var next = session ? session.user : null;
     if (next && user && next.id === user.id) return;
-    user = next;
+    user = next; resetProfile();
     // never call the client from inside this callback
     setTimeout(function () { user ? enter() : (show('out')); }, 0);
   });
@@ -253,9 +253,55 @@
     });
   });
 
-  /* ---------- account ---------- */
+  /* ---------- profile ---------- */
+  var FIELDS = ['full_name', 'company', 'role', 'goal', 'subject', 'comfort', 'english', 'minutes', 'deadline'];
+  var form = $('profileForm'), filledFor = null;
+  function resetProfile() { filledFor = null; form.reset(); $('profFields').disabled = true; say($('profMsg')); }
+  function fillProfile() {
+    if (filledFor === user.id) return; // keep anything typed but not yet saved
+    var id = user.id; $('profFields').disabled = true; say($('profMsg'));
+    sb.from('profiles').select(FIELDS.join(',')).eq('id', id).single().then(function (r) {
+      if (!user || user.id !== id) return;
+      // the form stays locked on failure, so blanks can never overwrite what is saved
+      if (r.error) { say($('profMsg'), 'err', 'We could not load your profile. Go back to practice and open it again.'); return; }
+      FIELDS.forEach(function (k) { form.elements[k].value = r.data[k] || ''; });
+      filledFor = id; $('profFields').disabled = false;
+    });
+  }
+  function renderProgress() {
+    var ul = $('progList'); ul.textContent = '';
+    var passed = modules.filter(function (m) { return m.status === 'passed'; }).length;
+    $('progSum').textContent = passed + ' of ' + modules.length + (modules.length === 1 ? ' module' : ' modules') + ' passed · ' + takes.length + (takes.length === 1 ? ' saved take' : ' saved takes');
+    modules.forEach(function (m) {
+      var n = takes.filter(function (t) { return t.module_id === m.id; }).length;
+      var li = el('li', m.status);
+      li.appendChild(el('b', null, m.title));
+      li.appendChild(el('span', null, LABEL[m.status] + ' · ' + n + (n === 1 ? ' take' : ' takes')));
+      ul.appendChild(li);
+    });
+  }
+  $('btnProfile').addEventListener('click', function () {
+    if (!views.profile.hidden) { show('room'); window.scrollTo(0, 0); return; }
+    if (busy()) { say($('roomMsg'), 'err', 'Stop the recording first, then open your profile.'); return; }
+    Array.prototype.forEach.call(document.querySelectorAll('audio'), function (a) { a.pause(); });
+    show('profile'); renderProgress(); fillProfile(); window.scrollTo(0, 0); $('profTitle').focus({ preventScroll: true });
+  });
+  form.addEventListener('input', function () { say($('profMsg')); });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var row = { profile_updated_at: new Date().toISOString() };
+    FIELDS.forEach(function (k) { row[k] = form.elements[k].value.trim() || null; });
+    var btn = form.querySelector('button[type="submit"]'); btn.disabled = true; say($('profMsg'));
+    sb.from('profiles').update(row).eq('id', user.id).select('id').single().then(function (r) {
+      btn.disabled = false;
+      if (r.error) say($('profMsg'), 'err', 'Your profile did not save. Please try again.');
+      else say($('profMsg'), 'ok', 'Saved.');
+    });
+  });
+
+  /* ---------- delete account ---------- */
   var dlg = $('account');
-  $('btnAccount').addEventListener('click', function () { $('delWord').value = ''; $('btnDelete').disabled = true; say($('accMsg')); dlg.showModal(); });
+  $('btnAskDelete').addEventListener('click', function () { $('delWord').value = ''; $('btnDelete').disabled = true; say($('accMsg')); dlg.showModal(); });
   $('btnAccClose').addEventListener('click', function () { dlg.close(); });
   $('delWord').addEventListener('input', function (e) { $('btnDelete').disabled = e.target.value.trim() !== 'DELETE'; });
   $('btnDelete').addEventListener('click', function () {

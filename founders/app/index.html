@@ -21,7 +21,7 @@
     </a>
     <div class="who" id="who" hidden>
       <span id="whoName"></span>
-      <button class="btn btn-ghost btn-sm" id="btnAccount" type="button">Account</button>
+      <button class="btn btn-ghost btn-sm" id="btnProfile" type="button">My profile</button>
       <button class="btn btn-ghost btn-sm" id="btnOut" type="button">Sign out</button>
     </div>
   </div>
@@ -59,7 +59,7 @@
       <ul class="list">
         <li><span><b>Private by default.</b> Your takes are stored in your own space. Other members cannot see or hear them.</span></li>
         <li><span><b>Used for one thing.</b> We keep recordings so you can play them back and compare. Nothing else.</span></li>
-        <li><span><b>Yours to delete.</b> Remove a single take, or your whole account and every recording, at any time from Account.</span></li>
+        <li><span><b>Yours to delete.</b> Remove a single take, or your whole account and every recording, at any time from My profile.</span></li>
       </ul>
       <label class="opt"><input type="checkbox" id="consentBox"><div>I agree to Founder Rehearsal storing my voice recordings so that I can review my own practice.</div></label>
       <button class="btn btn-primary" id="btnConsent" type="button" disabled>Enter my room</button>
@@ -123,13 +123,64 @@
     </div>
   </section>
 
+  <!-- profile -->
+  <section class="profile wrap" id="v-profile" hidden>
+    <div class="profile-head">
+      <span class="eyebrow">My profile</span>
+      <h1 id="profTitle" tabindex="-1">About <em>you.</em></h1>
+      <p class="lede">Tell us who you are and what you are working towards. We use this to build your modules. Every field is optional, and other members cannot see any of it.</p>
+      <p class="fine" id="accEmail"></p>
+    </div>
+
+    <form id="profileForm" novalidate>
+      <fieldset id="profFields" disabled>
+        <h2>About me</h2>
+        <label>Name<input name="full_name" autocomplete="name" maxlength="120"></label>
+        <div class="row2">
+          <label>Company<input name="company" autocomplete="organization" maxlength="120"></label>
+          <label>Your role<input name="role" placeholder="Founder, CEO" maxlength="120"></label>
+        </div>
+
+        <h2>My goals</h2>
+        <label>Where do you get stuck?<textarea name="goal" maxlength="2000" placeholder="For example: I freeze on camera, I ramble when I explain the product, or I avoid saying yes to podcasts."></textarea></label>
+        <label>What do you speak about? <span>This is how we write your cues</span><textarea name="subject" maxlength="2000" placeholder="Your product, industry or area of expertise, and who you usually speak to."></textarea></label>
+        <div class="row2">
+          <label>How do you feel speaking today?
+            <select name="comfort"><option value="">Choose one</option><option>1 - I avoid it</option><option>2 - I do it but dread it</option><option>3 - Fine, but I want to be better</option><option>4 - Comfortable, want to sharpen</option></select>
+          </label>
+          <label>English is my
+            <select name="english"><option value="">Choose one</option><option>First language</option><option>Second language</option></select>
+          </label>
+        </div>
+        <div class="row2">
+          <label>Time you can give each day
+            <select name="minutes"><option value="">Choose one</option><option>10 minutes</option><option>15 minutes</option><option>20 minutes or more</option></select>
+          </label>
+          <label>A date you are working towards<input name="deadline" placeholder="Demo day, 14 March" maxlength="120"></label>
+        </div>
+        <button class="btn btn-primary" type="submit">Save my profile</button>
+      </fieldset>
+      <p class="msg" id="profMsg" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="panel">
+      <h2>My progress</h2>
+      <p class="fine" id="progSum"></p>
+      <ul class="prog" id="progList"></ul>
+    </div>
+
+    <div class="panel quiet">
+      <h2>Privacy and data</h2>
+      <p>Your recordings are private to your room. You can delete a single take next to it on the practice page.</p>
+      <button class="btn btn-ghost btn-sm" id="btnAskDelete" type="button">Delete my account and data</button>
+    </div>
+  </section>
+
 </main>
 
 <dialog id="account">
-  <h2>Account</h2>
-  <p class="fine" id="accEmail"></p>
-  <h3>Delete my data</h3>
-  <p>This removes your account, your ladder and every recording. It cannot be undone.</p>
+  <h2>Delete my data</h2>
+  <p>This removes your account, your profile, your ladder and every recording. It cannot be undone.</p>
   <label>Type DELETE to confirm<input id="delWord" autocomplete="off"></label>
   <p class="msg" id="accMsg" role="status" aria-live="polite"></p>
   <div class="cta-row">
