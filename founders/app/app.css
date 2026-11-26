@@ -102,5 +102,44 @@ dialog .cta-row{margin-top:6px}
 .panel.quiet p{color:var(--muted);font-size:14.5px;margin:8px 0 16px}
 @media (max-width:520px){.app .nav .wrap{flex-wrap:wrap;height:auto;row-gap:10px;padding-top:12px;padding-bottom:12px}.who{margin-left:auto}.who .btn{white-space:nowrap}}
 
+/* scored drills */
+.cue.big .miss{background:var(--bad-soft);color:var(--bad);text-decoration:underline wavy;text-decoration-thickness:1px;text-underline-offset:5px;border-radius:3px}
+.cue.big .hint{display:block;margin-top:12px;font:14px/1.5 var(--body);color:var(--muted)}
+.model{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:14px}
+.model label{display:flex;align-items:center;gap:8px;color:var(--muted);font-weight:400}
+.model select{width:auto;margin:0;padding:8px 10px;font-size:14px}
+.live{margin-top:14px;min-height:1.5em;color:var(--muted);font-size:15px}
+.srnote{margin-top:6px;max-width:70ch}
+.score{margin-top:20px;display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.example{font:600 11px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--amber)}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:620px){.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.metric{display:grid;gap:4px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+.metric .k{font:600 11px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.metric .v{font:700 26px/1.1 var(--display);font-variant-numeric:tabular-nums}
+.metric .t{font-size:12.5px;color:var(--muted)}
+.metric .v.ok,.verdict.ok,.scores td.ok{color:var(--accent)}
+.metric .v.no,.verdict.no,.scores td.no{color:var(--bad)}
+.verdict{font-weight:600}
+.verdict:empty{display:none}
+.coach{border-top:1px solid var(--line);padding-top:12px;display:grid;gap:8px}
+.coach-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.coach textarea{min-height:160px;font-size:13px}
+.scores{margin-top:44px}
+.scores h2{font:700 26px/1.15 var(--display)}
+.scroll{position:relative;overflow-x:auto;margin-top:14px}
+.scores table{width:100%;border-collapse:collapse;font-size:13.5px}
+.scores th,.scores td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+.scores th{font:600 11px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.scores .fine{margin-top:6px;max-width:70ch}
+.takes>.fine{margin-top:6px}
+.scores .del{all:unset;cursor:pointer;color:var(--muted);font-size:13px;padding:4px 6px}
+.scores .del:hover,.scores .del.sure{color:var(--bad)}
+.scores .del:focus-visible{outline:2px solid var(--accent);border-radius:4px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.cues button.done{border-color:var(--accent);color:var(--accent)}
+.cues button.done[aria-pressed="true"]{color:var(--accent-ink)}
+.work{min-width:0}
+
 @media (max-width:860px){.room{grid-template-columns:1fr}.side{position:static;order:2}.takes li{grid-template-columns:1fr auto}.takes li audio{grid-column:1/-1;grid-row:2}}
 @media (prefers-reduced-motion:reduce){.recbtn,.recbtn i{transition:none}}

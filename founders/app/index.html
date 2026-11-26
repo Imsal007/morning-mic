@@ -9,7 +9,7 @@
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="../assets/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../styles.css?v=ea8f9fd8">
-<link rel="stylesheet" href="app.css?v=3f5e9a11">
+<link rel="stylesheet" href="app.css?v=b9cba9ca">
 </head>
 <body class="app">
 
@@ -91,6 +91,11 @@
       <div class="cues" id="cues" role="group" aria-label="Choose a cue"></div>
       <div class="cue big" id="cueText"></div>
 
+      <div class="model" id="model" hidden>
+        <button class="btn btn-ghost btn-sm" id="btnHear" type="button">&#9654; Hear it (British voice)</button>
+        <label>Speed <select id="rate"><option value="0.8">Slow</option><option value="0.92" selected>Natural</option><option value="1.05">Brisk</option></select></label>
+      </div>
+
       <div class="recorder" id="recorder">
         <button class="recbtn" id="btnRec" type="button" aria-pressed="false"><i></i><span id="recLabel">Record</span></button>
         <div class="rec-meta">
@@ -106,10 +111,42 @@
           <button class="btn btn-ghost btn-sm" id="btnDiscard" type="button">Discard</button>
         </div>
       </div>
+
+      <p class="live" id="live" hidden></p>
+      <div class="score" id="score" hidden>
+        <p class="example" id="exampleTag">Example result. Your first take replaces it.</p>
+        <div class="metrics" id="metrics"></div>
+        <p class="verdict" id="verdict" role="status" aria-live="polite"></p>
+        <div class="coach">
+          <div class="coach-row"><strong>Coach</strong><button class="btn btn-ghost btn-sm" id="btnCoach" type="button" disabled>Copy take for Claude</button></div>
+          <p class="fine" id="coachOut">Record a take, then copy it and paste it into Claude for feedback. No AI coach is connected inside this room yet.</p>
+          <textarea id="coachText" readonly hidden></textarea>
+        </div>
+      </div>
+
+      <p class="fine srnote" id="srNote" hidden></p>
       <p class="msg" id="roomMsg" role="status" aria-live="polite"></p>
+
+      <div class="pass" id="signBox" hidden>
+        <div>
+          <h2 id="signTitle"></h2>
+          <p id="signNote"></p>
+        </div>
+        <button class="btn btn-primary" id="btnSign" type="button" disabled>Ask coach to sign off</button>
+      </div>
+
+      <div class="scores" id="scores" hidden>
+        <h2>Recent scores</h2>
+        <p class="fine">A score is saved after each checked take so your drills can be ticked. No written copy of what you said is stored. Delete any score you do not want to keep.</p>
+        <div class="scroll"><table>
+          <thead><tr><th>When</th><th>Drill</th><th>Clarity</th><th>Pace</th><th>Fillers</th><th>Time</th><th>Result</th><th><span class="sr">Delete</span></th></tr></thead>
+          <tbody id="log"></tbody>
+        </table></div>
+      </div>
 
       <div class="takes">
         <h2>Takes on this module</h2>
+        <p class="fine" id="saveCount"></p>
         <ul id="takes"></ul>
       </div>
 
@@ -171,7 +208,7 @@
 
     <div class="panel quiet">
       <h2>Privacy and data</h2>
-      <p>Your recordings are private to your room. You can delete a single take next to it on the practice page.</p>
+      <p>Your recordings are private to your room. On the practice page you can delete any saved recording or score. Audio is saved only when you choose to keep it.</p>
       <button class="btn btn-ghost btn-sm" id="btnAskDelete" type="button">Delete my account and data</button>
     </div>
   </section>
@@ -191,6 +228,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="../config.js?v=b7cff98f"></script>
-<script src="app.js?v=6b284478"></script>
+<script src="practice.js?v=4b0cc708"></script>
+<script src="app.js?v=05e2d444"></script>
 </body>
 </html>
