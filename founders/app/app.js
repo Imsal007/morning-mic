@@ -204,6 +204,7 @@
   function renderScored() {
     var s = open.scoring;
     ['score', 'signBox', 'scores', 'srNote', 'live'].forEach(function (id) { $(id).hidden = !s; });
+    $('goal').hidden = true;
     $('model').hidden = !s || s.kind !== 'read';
     if (!s) return;
     var read = s.kind === 'read', n = cuesOf(open).length, done = 0;
@@ -225,7 +226,13 @@
     var v = $('verdict');
     v.className = 'verdict' + (result && result.checked ? (result.pass ? ' ok' : ' no') : '');
     v.textContent = !result ? '' : !result.checked ? 'No speech checker ran for this take, so there is no score. Play it back and judge it against the model voice.'
-      : result.pass ? 'Drill passed. Move to the next drill, or do one more clean take.' : 'Not yet. Look at the red numbers and the underlined words, then take it again.';
+      : result.pass ? 'Drill passed. Move to the next drill, or do one more clean take.' : 'Not yet. Here is what to change:';
+    var tips = result && !result.pass ? P.advice(s, cuesOf(open)[cueIdx], result) : [];
+    $('tips').textContent = ''; $('tips').hidden = !tips.length;
+    tips.forEach(function (t) { $('tips').appendChild(el('li', null, t)); });
+    // say what to aim for before the take, not only after it
+    $('goal').hidden = !read;
+    if (read) $('goal').textContent = 'Goal for this drill: ' + s.wpm[0] + '–' + s.wpm[1] + ' words a minute. That is ' + P.seconds(P.readSeconds(s, cuesOf(open)[cueIdx])) + ' from Record to Stop.';
     if (result && read) markCue(result.missIdx);
     $('btnCoach').disabled = !result || !result.checked;
 

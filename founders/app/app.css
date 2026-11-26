@@ -137,6 +137,14 @@ dialog .cta-row{margin-top:6px}
 .scores .del:hover,.scores .del.sure{color:var(--bad)}
 .scores .del:focus-visible{outline:2px solid var(--accent);border-radius:4px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.goal{margin-top:16px;font-size:14.5px;color:var(--ink)}
+.tips{margin:0;padding-left:18px;display:grid;gap:8px;font-size:15px;line-height:1.55;max-width:70ch}
+.help{border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:14.5px}
+.help summary{cursor:pointer;font-weight:600}
+.help dl{margin:10px 0 0;display:grid;gap:4px}
+.help dt{font-weight:600;margin-top:6px}
+.help dd{margin:0;color:var(--muted);line-height:1.55;max-width:70ch}
+.help dd b{color:var(--ink);font-weight:600}
 .cues button.done{border-color:var(--accent);color:var(--accent)}
 .cues button.done[aria-pressed="true"]{color:var(--accent-ink)}
 .work{min-width:0}

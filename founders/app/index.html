@@ -9,7 +9,7 @@
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="../assets/fonts/bricolage.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="../styles.css?v=ea8f9fd8">
-<link rel="stylesheet" href="app.css?v=b9cba9ca">
+<link rel="stylesheet" href="app.css?v=de292c6a">
 </head>
 <body class="app">
 
@@ -96,6 +96,8 @@
         <label>Speed <select id="rate"><option value="0.8">Slow</option><option value="0.92" selected>Natural</option><option value="1.05">Brisk</option></select></label>
       </div>
 
+      <p class="goal" id="goal" hidden></p>
+
       <div class="recorder" id="recorder">
         <button class="recbtn" id="btnRec" type="button" aria-pressed="false"><i></i><span id="recLabel">Record</span></button>
         <div class="rec-meta">
@@ -117,6 +119,17 @@
         <p class="example" id="exampleTag">Example result. Your first take replaces it.</p>
         <div class="metrics" id="metrics"></div>
         <p class="verdict" id="verdict" role="status" aria-live="polite"></p>
+        <ul class="tips" id="tips" hidden></ul>
+        <details class="help">
+          <summary>What do these mean?</summary>
+          <dl>
+            <dt>Clarity</dt><dd>How many of the words on screen the speech checker recognised. 90% or more passes. A missed word is underlined. It does not judge your accent, and it can mishear names even when you say them well.</dd>
+            <dt>Pace (wpm)</dt><dd>Words per minute: how fast you speak. <b>Below the range means speak a bit faster. Above the range means slow down.</b> It is timed from Record to Stop, so long silences make it look slower. In speaking modules, pace is a guide and does not affect passing.</dd>
+            <dt>Fillers</dt><dd>Words such as um, uh, like, basically, actually and “you know”. Fewer is better. A silent pause does not count.</dd>
+            <dt>Time</dt><dd>How long your take lasted. Speaking modules need a minimum length.</dd>
+            <dt>The example voice</dt><dd>This is your device’s computer voice. It can sound unnatural, especially with names. Use it as a guide to the words, and say your own name the way you naturally do.</dd>
+          </dl>
+        </details>
         <div class="coach">
           <div class="coach-row"><strong>Coach</strong><button class="btn btn-ghost btn-sm" id="btnCoach" type="button" disabled>Copy take for Claude</button></div>
           <p class="fine" id="coachOut">Record a take, then copy it and paste it into Claude for feedback. No AI coach is connected inside this room yet.</p>
@@ -228,7 +241,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="../config.js?v=b7cff98f"></script>
-<script src="practice.js?v=4b0cc708"></script>
-<script src="app.js?v=d8b4e617"></script>
+<script src="practice.js?v=666bd06e"></script>
+<script src="app.js?v=2efef234"></script>
 </body>
 </html>

@@ -38,6 +38,32 @@
     return { heard: heard, checked: checked, clarity: clarity, wpm: wpm, fillers: fillers, secs: Math.min(900, Math.round(secs)), missIdx: missIdx, missed: missed, pass: !!pass };
   }
 
+  /* ---------- plain-language help ---------- */
+  // how long a script takes inside the pace range
+  function readSeconds(scoring, text) {
+    var n = norm(text).length;
+    return [Math.ceil(n * 60 / scoring.wpm[1]), Math.floor(n * 60 / scoring.wpm[0])];
+  }
+  function seconds(range) { return range[0] >= range[1] ? 'about ' + range[0] + ' seconds' : 'about ' + range[0] + ' to ' + range[1] + ' seconds'; }
+  // one line for each target that was missed, saying what to change
+  function advice(scoring, text, r) {
+    var out = [], read = scoring.kind === 'read';
+    if (!r.checked) return out;
+    if (read) {
+      if (r.clarity < CLARITY_PASS) out.push('Clarity ' + r.clarity + '%, needs ' + CLARITY_PASS + '% or more. Practise the underlined words, finish each ending, then read the whole line again. The checker can also mishear names and brand names.');
+      var lo = scoring.wpm[0], hi = scoring.wpm[1], aim = 'Aim for ' + seconds(readSeconds(scoring, text)) + ' from Record to Stop.';
+      if (r.wpm === null) out.push('Pace could not be measured. Read the whole line, then press Stop.');
+      else if (r.wpm < lo) out.push('Pace ' + r.wpm + ' is too slow: speak a bit faster, to at least ' + lo + ' words a minute. ' + aim + ' Silence at the start and end counts, so start speaking straight away and press Stop as soon as you finish.');
+      else if (r.wpm > hi) out.push('Pace ' + r.wpm + ' is too fast: slow down to ' + hi + ' words a minute or fewer. ' + aim + ' Pause briefly at each full stop.');
+      if (r.fillers > READ_MAX_FILLERS) out.push('Fillers ' + r.fillers + ', no more than ' + READ_MAX_FILLERS + ' allowed. Read only the words on the screen, and pause silently if you need a moment.');
+    } else {
+      if (r.secs < scoring.minSecs) out.push('Time ' + r.secs + ' seconds is too short: keep going for at least ' + (scoring.minSecs - r.secs) + ' more. Add a reason or an example.');
+      if (r.fillers > scoring.maxFillers) out.push('Fillers ' + r.fillers + ', no more than ' + scoring.maxFillers + ' allowed. When you feel “um” coming, close your mouth and pause.');
+      if (!r.heard) out.push('The speech checker heard no words. Check your microphone and try again.');
+    }
+    return out;
+  }
+
   /* ---------- listening ---------- */
   var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   var cur = null;
@@ -107,5 +133,5 @@
       (read ? 'Score clarity and delivery against the script.' : 'Score structure, clarity and confidence of the answer; 7 or more means good enough to post on camera.');
   }
 
-  window.FRPractice = { CLARITY_PASS: CLARITY_PASS, READ_MAX_FILLERS: READ_MAX_FILLERS, supported: !!SR, norm: norm, score: score, listen: listen, finish: finish, abort: abort, speak: speak, hush: hush, brief: brief };
+  window.FRPractice = { CLARITY_PASS: CLARITY_PASS, READ_MAX_FILLERS: READ_MAX_FILLERS, supported: !!SR, norm: norm, score: score, advice: advice, readSeconds: readSeconds, seconds: seconds, listen: listen, finish: finish, abort: abort, speak: speak, hush: hush, brief: brief };
 })();
