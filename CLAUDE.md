@@ -60,7 +60,7 @@ Work is on branch `claude/affectionate-einstein-0p1j7o`. That branch is the prod
 - 25 Nov 2026: all six posts rewritten as long guides (about 800 to 1,200 words each) with checked sources, table of contents, per-page FAQ and BlogPosting/FAQPage/Breadcrumb markup. New `og.png` and `apple-touch-icon.png`. Cite only sources you have opened; a search summary wrongly said video feedback helps speaking anxiety (Smits 2006 found it did not).
 - Search Console, 25 Nov: URL inspection shows the homepage and all six posts indexed (the summary report lagged and showed 0). `/guides/` was unknown to Google; indexing requested for all. Search "founder rehearsal" (UK, 25 Nov) showed this site first; a similar domain, `foundersrehearsal.com` (plural), also appears, so include it in any trademark check. Performance up to 23 Nov: 8 impressions, 0 clicks.
 - Pricing wording (owner rule, 25 Nov 2026): never say "free" on the site. The price depends on the modules built for each founder and is given after they get in touch.
-- Launch readiness, 25 Nov 2026: application form and email alert tested and working. Members CANNOT sign in yet: Google is off (its button is hidden until enabled) and Supabase's built-in email sender only delivers to project team addresses, so custom SMTP is required. No privacy policy or terms yet, although the form collects personal data.
+- Launch readiness, 25 Nov 2026: application form and email alert tested and working. Email-link sign-in still cannot reach members (the built-in sender only delivers to project team addresses; custom SMTP is required). No privacy policy or terms yet, although the form collects personal data.
 - Name conflict (checked 25 Nov 2026): `foundersrehearsal.com` (plural) is a live Korean site, "Founders Rehearsal", a free co-founder decision simulator, registered 13 Oct 2026, a month before our domain. It was missed in the 15 Nov name check. For any new name, check singular, plural, hyphen and main extensions, open every live site found, and say what was not checked.
 - Google "preferred sources": the feature is real, but the site was not listed in Google's source preferences tool on 25 Nov, so no link is shown. Recheck monthly at google.com/preferences/source?q=founderrehearsal.com before adding anything.
 - Inside `.article`, buttons need their own text colour (the link colour once made the CTA invisible). Click every new link or button as a visitor before publishing.
@@ -72,15 +72,15 @@ Work is on branch `claude/affectionate-einstein-0p1j7o`. That branch is the prod
 - Member room at `founders/app/`: sign in with Google or an emailed link, consent screen, ladder, recorder with playback, saved takes, first-versus-latest comparison, pass a module, delete a take, delete all data.
 
 ### Not done or not tested
-- Sign-in has not been tested end to end. Google sign-in needs a Google OAuth client ID and secret added in Supabase (Authentication, Sign In / Providers, Google); the callback URL is `https://jjqwmypgkiakkdhffiqu.supabase.co/auth/v1/callback`.
-- The member room has only been checked signed out; recording, saving and passing are untested with a real account.
+- Google sign-in works (tested 26 Nov 2026 by the owner as founderrehearsal@gmail.com: user, profile, consent and baseline module created). Google Cloud project `founder-rehearsal-login` under founderrehearsal@gmail.com, OAuth app in **Testing**, so only listed test users can sign in. To open it to everyone, complete the Branding page (needs home page and privacy policy links) and publish. The client secret lives only in Google and Supabase.
+- Recording, playback, passing a module and delete-my-data are still untested with a real account.
 - No privacy policy or terms pages (need the owner's legal name and contact details).
 - The owner has no admin screen; applications and modules are managed in the Supabase dashboard.
 
 ### Next steps, in order
-1. Add Google sign-in credentials in Supabase.
-2. Test sign-in, recording and delete-my-data with a real account.
-3. New share image (`og.png`) in the new brand.
+1. Test recording, playback, passing a module and delete-my-data with the signed-in account.
+2. Add the owner's own practice modules (including motivational speeches and affirmations).
+3. Publish the Google OAuth app after the privacy page is live; set up custom SMTP for email links.
 4. Privacy policy and terms pages; link them from the consent screen and footer.
 5. Email: `hello@founderrehearsal.com` (Cloudflare Email Routing forwards for free; sending needs a mailbox provider).
 6. Trademark: UK and US register searches found nothing for "Founder Rehearsal" (15 Nov 2026), but the name is descriptive and EU was not checked. Ask a trademark attorney before investing heavily.
