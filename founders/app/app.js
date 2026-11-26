@@ -113,7 +113,7 @@
   function renderModule() {
     if (!open) { $('work').hidden = true; return; }
     $('work').hidden = false;
-    $('modKicker').textContent = 'Module ' + ('0' + open.position).slice(-2) + ' · ' + open.track;
+    $('modKicker').textContent = 'Module ' + ('0' + open.position).slice(-2) + (open.scoring ? ' of ' + modules.length : '') + ' · ' + open.track;
     $('modTitle').textContent = open.title;
     $('modBrief').textContent = open.brief;
     $('modRule').textContent = open.pass_rule; $('modRule').hidden = !open.pass_rule;
